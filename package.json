@@ -1,0 +1,39 @@
+{
+  "name": "urlparser-regex",
+  "version": "1.0.0",
+  "description": "Parse string url into different component like protocol, hostname, path, queries, and etc using Regex",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "babel src -d build",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run build",
+    "release": "np"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlcheah2/URLParser.git"
+  },
+  "keywords": [
+    "parse",
+    "parsing",
+    "url"
+  ],
+  "author": "Tek Loon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tlcheah2/URLParser/issues"
+  },
+  "homepage": "https://github.com/tlcheah2/URLParser#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "jest": "^21.2.1",
+    "watch": "^1.0.2"
+  }
+}
