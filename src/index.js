@@ -1,4 +1,4 @@
-const urlRegex = new RegExp(/(^\w+)(:\/\/)([\w\.\d]+)([\/\w.]+)(\:)?(\d+)?(\?)?/);
+const urlRegex = new RegExp(/(^\w+)?(:\/\/)?([\w\.\d]+)?(\/\w.+)?(\:)?(\d+)?(\?)?/);
 /**
  * 
  * urlParts[] 
@@ -21,7 +21,7 @@ class URLParser {
 
     _parseUrl(url) {
         if(url) {
-            console.log('url.split(urlRegex)',url.split(urlRegex));
+            console.log('url.split(urlRegex)', url.split(urlRegex));
             return url.split(urlRegex);
         }
         return null;
