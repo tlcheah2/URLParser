@@ -1,12 +1,12 @@
-const urlRegex = new RegExp(/(^\w+)?(:\/\/)?([\w\.\d]+)?(\/\w.+)?(\:)?(\d+)?(\?)?/);
+const urlRegex = new RegExp(/(^\w+:\/\/)?([\w\.\d]+)?([\/\w.]+)?(\:)?(\d+)?(\?[\w=&.]+)?/);
 /**
  * 
  * urlParts[] 
  * Index 1 - Protocol
- * Index 3 - Hostname
- * Index 4 - Path
- * Index 6 - Port
- * Index 8 - Query Parameter String
+ * Index 2 - Hostname
+ * Index 3 - Path
+ * Index 5 - Port
+ * Index 6 - Query Parameter String
  */
 class URLParser {
 
@@ -21,7 +21,6 @@ class URLParser {
 
     _parseUrl(url) {
         if(url) {
-            console.log('url.split(urlRegex)', url.split(urlRegex));
             return url.split(urlRegex);
         }
         return null;
@@ -35,13 +34,15 @@ class URLParser {
 
     _parseQueryString() {
         let queryString = this.getQueryString();
-       
         
         if(queryString && queryString.length > 0) {
+            queryString = queryString.substring(1);
             let paramsArray = queryString.split(/&/);
             paramsArray.forEach((query) => {
                 let keyAndValueArr = query.split(/=/);
-                this._queryObj = Object.assign(this._queryObj, {[keyAndValueArr[0]]: keyAndValueArr[1]});
+                let objKey = keyAndValueArr[0] ? keyAndValueArr[0] : null;
+                let objValue = keyAndValueArr[1] ? keyAndValueArr[1] : null;
+                this._queryObj = Object.assign(this._queryObj, {[objKey]: objValue});
             })
         }
         return this._queryObj;
@@ -49,23 +50,28 @@ class URLParser {
     }
 
     getProtocol() {
-        return this._getUrlParts(1);
+        let protocol = this._getUrlParts(1);
+        if(protocol && protocol.length > 0) {
+            let protocolArr = protocol.split(/:\/\//);
+            return protocolArr[0];
+        }
+        return null;
     }
 
     getHostName() {
-        return this._getUrlParts(3);
+        return this._getUrlParts(2);
     }
 
     getPath() {
-        return this._getUrlParts(4);
+        return this._getUrlParts(3);
     }
 
     getPort() {
-        return this._getUrlParts(6);
+        return this._getUrlParts(5);
     }
 
     getQueryString() {
-        return this._getUrlParts(8);
+        return this._getUrlParts(6);
     }
 
     getQueryObj() {
